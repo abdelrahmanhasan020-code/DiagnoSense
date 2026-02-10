@@ -9,11 +9,10 @@ use App\Http\Responses\ApiResponse;
 use App\Models\Patient;
 use App\Models\Room;
 use Illuminate\Support\Str;
-use Hidehalo\Nanoid\Client;
 
 class RoomController extends Controller
 {
-    public function store(StoreRoomRequest $request)
+    public function store(StoreRoomRequest $request , Patient $Patient)
     {
         $user   = $request->user();
         $doctor = $user->doctor;
@@ -22,8 +21,12 @@ class RoomController extends Controller
             return ApiResponse::error('Only doctors can create rooms', null, 403);
         }
 
-        $patientId = (int) $request->route('patient');
-        $patient = Patient::findOrFail($patientId);
+         $patientId = (int) $request->route('patient');
+         $patient = Patient::find($patientId);
+
+         if (!$patient) {
+        return ApiResponse::error('Patient id not found', null, 404);
+    }
 
         $existing = Room::where('patient_id', $patient->id)->first();
 
@@ -33,16 +36,15 @@ class RoomController extends Controller
                 new RoomResource($existing), 200);
         }
 
-        $client = new Client();
-        $token = $client->generateId(20);
 
-        $title = trim($request->input('title', ''));
+        $roomCode = bin2hex(random_bytes(10));
+
 
         $room = Room::create([
             'patient_id' => $patient->id,
             'doctor_id'  => $doctor->id,
-            'title'      => $title !== '' ? $title : "Case {$patient->id}",
-            'room_code'       => $token,
+            'title'      => $request->title,
+            'room_code'       => $roomCode,
         ]);
         return ApiResponse::success('room created successfully.', new RoomResource($room), 201);
     }
