@@ -17,6 +17,10 @@ class MedicalHistory extends Model
         'previous_surgeries_name',
     ];
 
+    protected $casts = [
+        'chronic_diseases' => 'array',
+    ];
+
     public function patient()
     {
         return $this->belongsTo(Patient::class);

@@ -58,7 +58,7 @@ class RegistrationRequest extends FormRequest
                 Rule::unique('users')->where(function ($query) use ($type) {
                     return $query->where('type', $type);
                 }),
-            ]
+            ],
         ];
     }
 
