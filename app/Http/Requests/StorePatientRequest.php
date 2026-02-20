@@ -36,10 +36,7 @@ class StorePatientRequest extends FormRequest
             ],
             'age' => ['nullable', 'integer'],
             'gender' => ['nullable', 'string', 'in:male,female'],
-            'national_id' => ['nullable', 'string', 'max:15', Rule::unique('users')->where(function ($query) {
-                return $query->where('type', 'patient');
-            }),
-            ],
+            'national_id' => ['nullable', 'string', 'max:15', 'unique:patients,national_id'],
             'is_smoker' => ['nullable', 'boolean'],
             'previous_surgeries' => ['nullable', 'boolean'],
             'chronic_diseases' => ['nullable', 'array'],
