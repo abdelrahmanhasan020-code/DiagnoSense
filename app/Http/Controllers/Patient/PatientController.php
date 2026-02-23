@@ -95,17 +95,14 @@ class PatientController extends Controller
 
         ProcessAi::dispatch($analysisResult->id, $jobData);
 
-        return response()->json([
-            'message' => 'Patient created successfully and AI analysis is in progress.',
+        return ApiResponse::success('Patient created successfully and AI analysis is in progress.', [
             'patient_id' => $patient->id,
             'analysis_result_id' => $analysisResult->id,
         ], 201);
 
         } catch (\Exception $e) {
             DB::rollBack();
-            return response()->json([
-                'message' => 'Failed to create patient: ' . $e->getMessage(),
-            ], 500);
+            return ApiResponse::error('Failed to create patient: ' . $e->getMessage(), null, 500);
         }
     }
     public function getKeyInfo($patientId){
