@@ -15,6 +15,7 @@ class Patient extends Model
         'age',
         'gender',
         'national_id',
+        'status'
     ];
 
     public function user()

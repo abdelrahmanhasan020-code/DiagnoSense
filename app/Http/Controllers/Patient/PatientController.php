@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Patient;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePatientRequest;
+use App\Http\Requests\UpdatePatientStatusRequest;
 use App\Http\Resources\PatientListResource;
 use App\Http\Responses\ApiResponse;
 use App\Jobs\ProcessAi;
@@ -132,4 +133,34 @@ class PatientController extends Controller
             200
         );
     }
+
+public function updateStatus(UpdatePatientStatusRequest $request, $patient)
+    {
+        $patient = Patient::findOrFail($patient);
+        $patient->update(['status' => $request->status]);
+
+          return ApiResponse::success(
+            'Patient status updated successfully',
+            $patient,
+            200
+    );
+    }
+    public function statusByType(string $type)
+    {
+        $allowedTypes = ['critical', 'stable', 'new updates', 'discharged'];
+
+         if (!in_array($type, $allowedTypes)) {
+               return ApiResponse::error('Invalid filter type', [], 400);
+         }
+
+    $patients = Patient::with('user')
+        ->where('status', $type)->latest()->paginate(9);
+
+         return ApiResponse::success(
+             'Patients retrieved successfully',
+             $patients,
+             200
+            );
+    }
 }
+
