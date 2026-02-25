@@ -15,7 +15,7 @@ class Patient extends Model
         'age',
         'gender',
         'national_id',
-        'status'
+        'status',
     ];
 
     public function user()
@@ -37,8 +37,14 @@ class Patient extends Model
     {
         return $this->hasMany(Report::class);
     }
+
     public function aiAnalysisResults()
     {
-        return $this->hasMany(AiAnalysisResult::class); 
+        return $this->hasMany(AiAnalysisResult::class);
+    }
+
+    public function latestAiAnalysisResult()
+    {
+        return $this->hasOne(AiAnalysisResult::class)->latest();
     }
 }

@@ -23,14 +23,15 @@ class UpdatePatientStatusRequest extends FormRequest
     public function rules(): array
     {
         return [
-             'status' => ['required', Rule::in(['critical','stable','new updates','discharged'])]
+            'status' => ['required', Rule::in(['critical', 'stable', 'new updates', 'discharged'])],
         ];
     }
+
     public function messages(): array
     {
         return [
             'status.required' => 'Status is required.',
-            'status.in' => 'Invalid status value.'
+            'status.in' => 'Invalid status value.',
         ];
     }
 }
