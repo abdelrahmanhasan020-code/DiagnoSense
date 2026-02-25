@@ -38,6 +38,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::patch('/patients/{patient}/status',[PatientController::class, 'updateStatus']);
     Route::get('/patients/status/{type}',  [PatientController::class, 'statusByType']);
     });
+
+
     
-    
- 
