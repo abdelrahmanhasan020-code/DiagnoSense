@@ -13,8 +13,8 @@ use App\Models\MedicalHistory;
 use App\Models\Patient;
 use App\Models\Report;
 use App\Models\User;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
