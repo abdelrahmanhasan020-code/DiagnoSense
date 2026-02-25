@@ -14,14 +14,16 @@ use App\Models\Patient;
 use App\Models\Report;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class PatientController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $patients = Patient::with(['user', 'latestAiAnalysisResult'])->paginate(9);
+        $doctor = $request->user()->doctor;
+        $patients = $doctor->patients()->with(['user', 'latestAiAnalysisResult'])->paginate(9);
 
         return PatientListResource::collection($patients);
     }
@@ -140,9 +142,10 @@ class PatientController extends Controller
 
     public function updateStatus(UpdatePatientStatusRequest $request, $patient)
     {
-        $patient = Patient::find($patient);
+        $doctor = $request->user()->doctor;
+        $patient = $doctor->patients()->find($patient);
         if (! $patient) {
-            return ApiResponse::error('Patient not found', null, 404);
+            return ApiResponse::error('Unauthorized or patient not found in your list', null, 403);
         }
         $patient->update(['status' => $request->status]);
 
