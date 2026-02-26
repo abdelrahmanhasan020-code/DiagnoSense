@@ -116,6 +116,9 @@
                                                                                 <li class="tocify-item level-2" data-unique="endpoints-GETapi-patients-status--type-">
                                 <a href="#endpoints-GETapi-patients-status--type-">GET api/patients/status/{type}</a>
                             </li>
+                                                                                <li class="tocify-item level-2" data-unique="endpoints-GETapi-search">
+                                <a href="#endpoints-GETapi-search">Handle the incoming request.</a>
+                            </li>
                                                                         </ul>
                             </ul>
             </div>
@@ -1781,16 +1784,16 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --form "age=17"\
     --form "gender=male"\
     --form "national_id=mqeopfuudtdsu"\
-    --form "is_smoker="\
-    --form "previous_surgeries="\
+    --form "is_smoker=1"\
+    --form "previous_surgeries=1"\
     --form "chronic_diseases[]=consequatur"\
     --form "previous_surgeries_name=consequatur"\
     --form "medications=consequatur"\
     --form "allergies=consequatur"\
     --form "family_history=consequatur"\
-    --form "lab[]=@C:\Users\Solo\AppData\Local\Temp\php8FBE.tmp" \
-    --form "radiology[]=@C:\Users\Solo\AppData\Local\Temp\php8FCE.tmp" \
-    --form "medical_history[]=@C:\Users\Solo\AppData\Local\Temp\php8FCF.tmp" </code></pre></div>
+    --form "lab[]=@C:\Users\Solo\AppData\Local\Temp\phpE011.tmp" \
+    --form "radiology[]=@C:\Users\Solo\AppData\Local\Temp\phpE022.tmp" \
+    --form "medical_history[]=@C:\Users\Solo\AppData\Local\Temp\phpE023.tmp" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -1810,8 +1813,8 @@ body.append('phone', 'hfqcoynlazghd');
 body.append('age', '17');
 body.append('gender', 'male');
 body.append('national_id', 'mqeopfuudtdsu');
-body.append('is_smoker', '');
-body.append('previous_surgeries', '');
+body.append('is_smoker', '1');
+body.append('previous_surgeries', '1');
 body.append('chronic_diseases[]', 'consequatur');
 body.append('previous_surgeries_name', 'consequatur');
 body.append('medications', 'consequatur');
@@ -1997,7 +2000,7 @@ Must be one of:
             <code>false</code>
         </label>
     <br>
-<p>Example: <code>false</code></p>
+<p>Example: <code>true</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>previous_surgeries</code></b>&nbsp;&nbsp;
@@ -2019,7 +2022,7 @@ Must be one of:
             <code>false</code>
         </label>
     <br>
-<p>Example: <code>false</code></p>
+<p>Example: <code>true</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>chronic_diseases</code></b>&nbsp;&nbsp;
@@ -2283,7 +2286,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
-    \"status\": \"stable\"
+    \"status\": \"under review\"
 }"
 </code></pre></div>
 
@@ -2299,7 +2302,7 @@ const headers = {
 };
 
 let body = {
-    "status": "stable"
+    "status": "under review"
 };
 
 fetch(url, {
@@ -2404,12 +2407,12 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="status"                data-endpoint="PATCHapi-patients--patient--status"
-               value="stable"
+               value="under review"
                data-component="body">
     <br>
-<p>Example: <code>stable</code></p>
+<p>Example: <code>under review</code></p>
 Must be one of:
-<ul style="list-style-type: square;"><li><code>critical</code></li> <li><code>stable</code></li> <li><code>new updates</code></li> <li><code>discharged</code></li></ul>
+<ul style="list-style-type: square;"><li><code>critical</code></li> <li><code>stable</code></li> <li><code>under review</code></li></ul>
         </div>
         </form>
 
@@ -2551,6 +2554,132 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <p>Example: <code>consequatur</code></p>
             </div>
                     </form>
+
+                    <h2 id="endpoints-GETapi-search">Handle the incoming request.</h2>
+
+<p>
+</p>
+
+
+
+<span id="example-requests-GETapi-search">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://localhost:8000/api/search" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/api/search"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-search">
+            <blockquote>
+            <p>Example response (401):</p>
+        </blockquote>
+                <details class="annotation">
+            <summary style="cursor: pointer;">
+                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
+            </summary>
+            <pre><code class="language-http">cache-control: no-cache, private
+content-type: application/json
+access-control-allow-origin: *
+ </code></pre></details>         <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Unauthenticated.&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-search" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-search"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-search"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-search" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-search">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-GETapi-search" data-method="GET"
+      data-path="api/search"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-search', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-search"
+                    onclick="tryItOut('GETapi-search');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-search"
+                    onclick="cancelTryOut('GETapi-search');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-search"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/search</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-search"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-search"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        </form>
 
             
 
