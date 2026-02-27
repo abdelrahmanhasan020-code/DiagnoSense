@@ -110,6 +110,9 @@
                                                                                 <li class="tocify-item level-2" data-unique="endpoints-GETapi-patients--patientId--key-info">
                                 <a href="#endpoints-GETapi-patients--patientId--key-info">GET api/patients/{patientId}/key-info</a>
                             </li>
+                                                                                <li class="tocify-item level-2" data-unique="endpoints-GETapi-patients--patientId--overview">
+                                <a href="#endpoints-GETapi-patients--patientId--overview">GET api/patients/{patientId}/overview</a>
+                            </li>
                                                                                 <li class="tocify-item level-2" data-unique="endpoints-PATCHapi-patients--patient--status">
                                 <a href="#endpoints-PATCHapi-patients--patient--status">PATCH api/patients/{patient}/status</a>
                             </li>
@@ -130,7 +133,7 @@
     </ul>
 
     <ul class="toc-footer" id="last-updated">
-        <li>Last updated: February 25, 2026</li>
+        <li>Last updated: February 27, 2026</li>
     </ul>
 </div>
 
@@ -1784,16 +1787,17 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --form "age=17"\
     --form "gender=male"\
     --form "national_id=mqeopfuudtdsu"\
-    --form "is_smoker=1"\
-    --form "previous_surgeries=1"\
+    --form "is_smoker="\
+    --form "previous_surgeries="\
     --form "chronic_diseases[]=consequatur"\
     --form "previous_surgeries_name=consequatur"\
     --form "medications=consequatur"\
     --form "allergies=consequatur"\
     --form "family_history=consequatur"\
-    --form "lab[]=@C:\Users\Solo\AppData\Local\Temp\phpE011.tmp" \
-    --form "radiology[]=@C:\Users\Solo\AppData\Local\Temp\phpE022.tmp" \
-    --form "medical_history[]=@C:\Users\Solo\AppData\Local\Temp\phpE023.tmp" </code></pre></div>
+    --form "current_complaint=consequatur"\
+    --form "lab[]=@C:\Users\Solo\AppData\Local\Temp\phpBAE3.tmp" \
+    --form "radiology[]=@C:\Users\Solo\AppData\Local\Temp\phpBAF4.tmp" \
+    --form "medical_history[]=@C:\Users\Solo\AppData\Local\Temp\phpBAF5.tmp" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -1813,13 +1817,14 @@ body.append('phone', 'hfqcoynlazghd');
 body.append('age', '17');
 body.append('gender', 'male');
 body.append('national_id', 'mqeopfuudtdsu');
-body.append('is_smoker', '1');
-body.append('previous_surgeries', '1');
+body.append('is_smoker', '');
+body.append('previous_surgeries', '');
 body.append('chronic_diseases[]', 'consequatur');
 body.append('previous_surgeries_name', 'consequatur');
 body.append('medications', 'consequatur');
 body.append('allergies', 'consequatur');
 body.append('family_history', 'consequatur');
+body.append('current_complaint', 'consequatur');
 body.append('lab[]', document.querySelector('input[name="lab[]"]').files[0]);
 body.append('radiology[]', document.querySelector('input[name="radiology[]"]').files[0]);
 body.append('medical_history[]', document.querySelector('input[name="medical_history[]"]').files[0]);
@@ -2000,7 +2005,7 @@ Must be one of:
             <code>false</code>
         </label>
     <br>
-<p>Example: <code>true</code></p>
+<p>Example: <code>false</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>previous_surgeries</code></b>&nbsp;&nbsp;
@@ -2022,7 +2027,7 @@ Must be one of:
             <code>false</code>
         </label>
     <br>
-<p>Example: <code>true</code></p>
+<p>Example: <code>false</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>chronic_diseases</code></b>&nbsp;&nbsp;
@@ -2127,6 +2132,18 @@ Must be one of:
                data-component="body">
     <br>
 <p>Must be a file. Must not be greater than 10240 kilobytes.</p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>current_complaint</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="current_complaint"                data-endpoint="POSTapi-patients"
+               value="consequatur"
+               data-component="body">
+    <br>
+<p>Example: <code>consequatur</code></p>
         </div>
         </form>
 
@@ -2269,6 +2286,145 @@ You can check the Dev Tools console for debugging information.</code></pre>
             </div>
                     </form>
 
+                    <h2 id="endpoints-GETapi-patients--patientId--overview">GET api/patients/{patientId}/overview</h2>
+
+<p>
+</p>
+
+
+
+<span id="example-requests-GETapi-patients--patientId--overview">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://localhost:8000/api/patients/consequatur/overview" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/api/patients/consequatur/overview"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-patients--patientId--overview">
+            <blockquote>
+            <p>Example response (401):</p>
+        </blockquote>
+                <details class="annotation">
+            <summary style="cursor: pointer;">
+                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
+            </summary>
+            <pre><code class="language-http">cache-control: no-cache, private
+content-type: application/json
+access-control-allow-origin: *
+ </code></pre></details>         <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Unauthenticated.&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-patients--patientId--overview" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-patients--patientId--overview"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-patients--patientId--overview"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-patients--patientId--overview" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-patients--patientId--overview">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-GETapi-patients--patientId--overview" data-method="GET"
+      data-path="api/patients/{patientId}/overview"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-patients--patientId--overview', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-patients--patientId--overview"
+                    onclick="tryItOut('GETapi-patients--patientId--overview');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-patients--patientId--overview"
+                    onclick="cancelTryOut('GETapi-patients--patientId--overview');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-patients--patientId--overview"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/patients/{patientId}/overview</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-patients--patientId--overview"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-patients--patientId--overview"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>patientId</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="patientId"                data-endpoint="GETapi-patients--patientId--overview"
+               value="consequatur"
+               data-component="url">
+    <br>
+<p>Example: <code>consequatur</code></p>
+            </div>
+                    </form>
+
                     <h2 id="endpoints-PATCHapi-patients--patient--status">PATCH api/patients/{patient}/status</h2>
 
 <p>
@@ -2286,7 +2442,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
-    \"status\": \"under review\"
+    \"status\": \"critical\"
 }"
 </code></pre></div>
 
@@ -2302,7 +2458,7 @@ const headers = {
 };
 
 let body = {
-    "status": "under review"
+    "status": "critical"
 };
 
 fetch(url, {
@@ -2407,10 +2563,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="status"                data-endpoint="PATCHapi-patients--patient--status"
-               value="under review"
+               value="critical"
                data-component="body">
     <br>
-<p>Example: <code>under review</code></p>
+<p>Example: <code>critical</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>critical</code></li> <li><code>stable</code></li> <li><code>under review</code></li></ul>
         </div>
