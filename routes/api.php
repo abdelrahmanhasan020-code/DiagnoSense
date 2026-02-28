@@ -7,6 +7,7 @@ use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\SocialAuthController;
+use App\Http\Controllers\MedicationController;
 use App\Http\Controllers\Patient\PatientController;
 use Illuminate\Support\Facades\Route;
 
@@ -34,4 +35,5 @@ Route::controller(SocialAuthController::class)->group(function () {
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/patients', [PatientController::class, 'store']);
     Route::get('/patients/{patientId}/key-info', [PatientController::class, 'getKeyInfo']);
+    Route::post('/medications', [MedicationController::class, 'store'])->name('medications.store');
 });
