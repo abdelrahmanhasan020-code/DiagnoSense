@@ -26,7 +26,7 @@ class PatientController extends Controller
     public function index(Request $request)
     {
         $doctor = $request->user()->doctor;
-        $patients = $doctor->patients()->with(['user', 'latestAiAnalysisResult'])->get();
+        $patients = $doctor->patients()->with(['user', 'latestAiAnalysisResult'])->paginate(12);
         return PatientListResource::collection($patients);
     }
 
@@ -168,7 +168,7 @@ class PatientController extends Controller
 
         $patients = Patient::with(['user', 'latestAiAnalysisResult'])
             ->where('status', $type)
-            ->get();
+            ->paginate(12);
 
         return PatientListResource::collection($patients);
     }

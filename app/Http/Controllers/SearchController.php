@@ -25,7 +25,7 @@ class SearchController extends Controller
                         'patient:id,user_id,age,status,created_at',
                         'patient.latestAiAnalysisResult:id,patient_id,ai_insight',
                     ]);
-            })->get();
+            })->paginate(12);
 
         if ($patients->count() > 0) {
             return SearchResource::collection($patients);
