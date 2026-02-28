@@ -8,6 +8,7 @@ use App\Http\Requests\UpdatePatientStatusRequest;
 use App\Http\Resources\KeyPointResource;
 use App\Http\Resources\PatientListResource;
 use App\Http\Resources\PatientOverviewResource;
+use App\Http\Resources\ActivityLogResource;
 use App\Http\Responses\ApiResponse;
 use App\Jobs\ProcessAi;
 use App\Models\AiAnalysisResult;
@@ -189,40 +190,27 @@ class PatientController extends Controller
             new PatientOverviewResource($patient),
         ], 200);
     }
+
+
     public function activityHistory($patientId)
     {
-    $patient = Patient::find($patientId);
+        $patient = Patient::find($patientId);
 
-    if (!$patient) {
-        return ApiResponse::error(
-            'Patient not found',
-            [],
-            404
-        );
+        if (!$patient) {
+          return ApiResponse::error(
+              'Patient not found',[],404);
     }
 
-    $logs = ActivityLog::where('model_type', 'Patient')
-        ->where('model_id', $patientId)
-        ->with('doctor.user')
-        ->orderByDesc('created_at')->get()
-        ->map(function ($log) {
-            return [
-                'id' => $log->id,
-                'type' => $log->action,
-                'message' => $log->description,
-                'doctor' => [
-                    'id' => $log->doctor?->id,
-                    'name' => $log->doctor?->user?->name,
-                ],
-                'created_at' => $log->created_at,
-                'time_ago' => $log->created_at->diffForHumans(),
-            ];
-        });
+        $logs = ActivityLog::where('model_type', 'Patient')
+           ->where('model_id', $patientId)
+           ->with('doctor.user')
+           ->orderByDesc('created_at')
+           ->get();
 
-    return ApiResponse::success(
-        'Activity history retrieved successfully',
-        $logs,
-        200
+        return ApiResponse::success(
+         'Activity history retrieved successfully',
+         ActivityLogResource::collection($logs),
+         200
     );
-    }
+}
 }
