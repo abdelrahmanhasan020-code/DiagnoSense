@@ -192,13 +192,14 @@ class PatientController extends Controller
     }
 
 
-    public function activityHistory($patientId)
+    public function activityHistory(Request $request,$patientId)
     {
-        $patient = Patient::find($patientId);
+        $doctor = $request->user()->doctor;
+       $patient = $doctor->patients()->find($patientId);
 
         if (!$patient) {
-          return ApiResponse::error(
-              'Patient not found',[],404);
+            return ApiResponse::error(
+              'You are not allowed to view this patient activities',null,403);
     }
 
         $logs = ActivityLog::where('model_type', 'Patient')
@@ -206,11 +207,11 @@ class PatientController extends Controller
            ->with('doctor.user')
            ->orderByDesc('created_at')
            ->get();
-
+   
         return ApiResponse::success(
-         'Activity history retrieved successfully',
-         ActivityLogResource::collection($logs),
-         200
+           'Activity history retrieved successfully',
+           ActivityLogResource::collection($logs),
+           200
     );
-}
+    }
 }
