@@ -7,6 +7,7 @@ use App\Http\Requests\StorePatientRequest;
 use App\Http\Requests\UpdatePatientStatusRequest;
 use App\Http\Resources\KeyPointResource;
 use App\Http\Resources\PatientListResource;
+use App\Http\Resources\PatientOverviewResource;
 use App\Http\Responses\ApiResponse;
 use App\Jobs\ProcessAi;
 use App\Models\AiAnalysisResult;
@@ -25,8 +26,7 @@ class PatientController extends Controller
     public function index(Request $request)
     {
         $doctor = $request->user()->doctor;
-        $patients = $doctor->patients()->with(['user', 'latestAiAnalysisResult'])->paginate(9);
-
+        $patients = $doctor->patients()->with(['user', 'latestAiAnalysisResult'])->paginate(12);
         return PatientListResource::collection($patients);
     }
 
@@ -160,7 +160,7 @@ class PatientController extends Controller
         );
     }
 
-    public function statusByType(string $type)
+    public function statusByType(Request $request ,string $type)
     {
         $allowedTypes = ['critical', 'stable', 'under review'];
 
@@ -168,10 +168,28 @@ class PatientController extends Controller
             return ApiResponse::error('Invalid filter type', [], 400);
         }
 
-        $patients = Patient::with(['user', 'latestAiAnalysisResult'])
-            ->where('status', $type)
-            ->paginate(9);
+        $doctor = $request->user()->doctor;
+
+        $patients = $doctor->patients()
+        ->with(['user', 'latestAiAnalysisResult'])
+        ->where('status', $type)
+        ->paginate(12);
 
         return PatientListResource::collection($patients);
+    }
+
+    public function overview(Request $request, $patientId){
+        $doctor = $request->user()->doctor;
+        $patient = $doctor->patients()->with([
+                    'user',
+                    'medicalHistory',
+                    'latestAiAnalysisResult',
+                ])->find($patientId);
+        if (! $patient) {
+            return ApiResponse::error('Unauthorized or patient not found in your list', null, 403);
+        }
+        return ApiResponse::success('Patient retrieved successfully.', [
+            new PatientOverviewResource($patient),
+        ], 200);
     }
 }

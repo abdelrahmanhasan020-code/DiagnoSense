@@ -420,12 +420,12 @@ paths:
                 is_smoker:
                   type: boolean
                   description: ''
-                  example: true
+                  example: false
                   nullable: true
                 previous_surgeries:
                   type: boolean
                   description: ''
-                  example: true
+                  example: false
                   nullable: true
                 chronic_diseases:
                   type: array
@@ -472,6 +472,11 @@ paths:
                   items:
                     type: string
                     format: binary
+                current_complaint:
+                  type: string
+                  description: ''
+                  example: consequatur
+                  nullable: true
               required:
                 - name
       security: []
@@ -479,6 +484,37 @@ paths:
     get:
       summary: ''
       operationId: getApiPatientsPatientIdKeyInfo
+      description: ''
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+      tags:
+        - Endpoints
+      security: []
+    parameters:
+      -
+        in: path
+        name: patientId
+        description: ''
+        example: consequatur
+        required: true
+        schema:
+          type: string
+  '/api/patients/{patientId}/overview':
+    get:
+      summary: ''
+      operationId: getApiPatientsPatientIdOverview
       description: ''
       parameters: []
       responses:
@@ -525,7 +561,7 @@ paths:
                 status:
                   type: string
                   description: ''
-                  example: 'under review'
+                  example: critical
                   nullable: false
                   enum:
                     - critical
@@ -574,7 +610,7 @@ paths:
         required: true
         schema:
           type: string
-  '/api/search':
+  "/api/search":
     get:
       summary: ''
       operationId: handleTheIncomingRequest
@@ -596,3 +632,45 @@ paths:
       tags:
         - Endpoints
       security: []
+  '/api/key-points/{keyPointId}':
+    delete:
+      summary: ''
+      operationId: deleteApiKeyPointsKeyPointId
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+    patch:
+      summary: ''
+      operationId: patchApiKeyPointsKeyPointId
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                insight:
+                  type: string
+                  description: ''
+                  example: consequatur
+                  nullable: false
+              required:
+                - insight
+      security: []
+    parameters:
+      -
+        in: path
+        name: keyPointId
+        description: ''
+        example: consequatur
+        required: true
+        schema:
+          type: string

@@ -742,7 +742,7 @@ endpoints:
         name: previous_surgeries
         description: ''
         required: false
-        example: true
+        example: false
         type: boolean
         enumValues: []
         exampleWasSpecified: false
@@ -840,6 +840,17 @@ endpoints:
         exampleWasSpecified: false
         nullable: false
         deprecated: false
+      current_complaint:
+        custom: []
+        name: current_complaint
+        description: ''
+        required: false
+        example: consequatur
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
     cleanBodyParameters:
       name: vmqeopfuudtdsufvyvddq
       email: kunde.eloisa@example.com
@@ -848,13 +859,14 @@ endpoints:
       gender: male
       national_id: mqeopfuudtdsu
       is_smoker: true
-      previous_surgeries: true
+      previous_surgeries: false
       chronic_diseases:
         - consequatur
       previous_surgeries_name: consequatur
       medications: consequatur
       allergies: consequatur
       family_history: consequatur
+      current_complaint: consequatur
     fileParameters:
       lab:
         - null
@@ -873,6 +885,58 @@ endpoints:
     httpMethods:
       - GET
     uri: 'api/patients/{patientId}/key-info'
+    metadata:
+      custom: []
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      patientId:
+        custom: []
+        name: patientId
+        description: ''
+        required: true
+        example: consequatur
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      patientId: consequatur
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 401
+        content: '{"message":"Unauthenticated."}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+        description: null
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/patients/{patientId}/overview'
     metadata:
       custom: []
       groupName: Endpoints
@@ -1065,6 +1129,104 @@ endpoints:
           content-type: application/json
           access-control-allow-origin: '*'
         description: null
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - DELETE
+    uri: 'api/key-points/{keyPointId}'
+    metadata:
+      custom: []
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      keyPointId:
+        custom: []
+        name: keyPointId
+        description: ''
+        required: true
+        example: consequatur
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      keyPointId: consequatur
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - PATCH
+    uri: 'api/key-points/{keyPointId}'
+    metadata:
+      custom: []
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      keyPointId:
+        custom: []
+        name: keyPointId
+        description: ''
+        required: true
+        example: consequatur
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      keyPointId: consequatur
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      insight:
+        custom: []
+        name: insight
+        description: ''
+        required: true
+        example: consequatur
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      insight: consequatur
+    fileParameters: []
+    responses: []
     responseFields: []
     auth: []
     controller: null
