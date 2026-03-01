@@ -42,7 +42,7 @@ class Patient extends Model
         return $this->hasMany(AiAnalysisResult::class);
     }
 
-    public function appointments()
+    public function visits()
     {
         return $this->hasMany(Visit::class);
     }
