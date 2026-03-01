@@ -13,6 +13,7 @@ class Medication extends Model
         'patient_id',
         'doctor_id',
         'duration',
+        'visit_id',
     ];
 
     public function patient()
@@ -23,5 +24,10 @@ class Medication extends Model
     public function doctor()
     {
         return $this->belongsTo(Doctor::class);
+    }
+
+    public function visit()
+    {
+        return $this->belongsTo(Visit::class);
     }
 }

@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Appointment extends Model
+class Visit extends Model
 {
     protected $fillable = [
-        'appointment_date',
+        'next_visit_date',
+        'status',
         'doctor_id',
         'patient_id',
     ];
@@ -24,5 +25,15 @@ class Appointment extends Model
     public function patient()
     {
         return $this->belongsTo(Patient::class);
+    }
+
+    public function medications()
+    {
+        return $this->hasMany(Medication::class);
+    }
+
+    public function tasks()
+    {
+        return $this->hasMany(Task::class);
     }
 }

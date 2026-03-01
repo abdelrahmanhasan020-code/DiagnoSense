@@ -22,4 +22,9 @@ class Task extends Model
     {
         return $this->belongsTo(Doctor::class);
     }
+
+    public function visit()
+    {
+        return $this->belongsTo(Visit::class);
+    }
 }
