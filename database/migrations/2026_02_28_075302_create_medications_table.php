@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('dosage');
             $table->string('frequency');
             $table->string('duration')->nullable();
-            $table->foreignId('visit_id')->constrained('visits')->onDelete('cascade');
+            $table->foreignId('visit_id');
             $table->foreignId('patient_id')->constrained('patients')->onDelete('cascade');
             $table->foreignId('doctor_id')->constrained('doctors')->onDelete('cascade');
             $table->timestamps();
