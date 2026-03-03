@@ -127,16 +127,23 @@ class PatientController extends Controller
         if (! $patient) {
             return ApiResponse::error('Patient not found', null, 404);
         }
-        $keyPoints = KeyPoint::whereHas('aiAnalysisResult', function ($query) use ($patientId) {
-            $query->where('patient_id', $patientId)
-                ->where('status', 'completed');
-        })
+        $latestAnalysis = AiAnalysisResult::where('patient_id', $patientId)
+        ->latest()
+        ->first();
+        if(! $latestAnalysis || $latestAnalysis->status === 'processing') {
+            return ApiResponse::error('AI analysis is processing now', null, 404);
+        }
+        if ($latestAnalysis->status === 'failed') {
+            return ApiResponse::error(
+                'The AI analysis process failed',
+                $latestAnalysis->response,
+                422
+            );
+        }
+        $keyPoints = $latestAnalysis->keyPoints()
             ->orderBy('created_at', 'desc')
             ->get();
 
-        if ($keyPoints->isEmpty()) {
-            return ApiResponse::error('No Key Points found for this patient.', null, 404);
-        }
 
         return ApiResponse::success('Key Points retrieved successfully.', [
             'high' => KeyPointResource::collection($keyPoints->where('priority', 'high')),
