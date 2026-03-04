@@ -34,8 +34,8 @@ class StorePatientRequest extends FormRequest
                     return $query->where('type', 'patient');
                 }),
             ],
-            'age' => ['nullable', 'integer'],
-            'gender' => ['nullable', 'string', 'in:male,female'],
+            'age' => ['required', 'integer'],
+            'gender' => ['required', 'string', 'in:male,female'],
             'national_id' => ['nullable', 'string', 'max:15', 'unique:patients,national_id'],
             'is_smoker' => ['nullable', 'boolean'],
             'previous_surgeries' => ['nullable', 'boolean'],
