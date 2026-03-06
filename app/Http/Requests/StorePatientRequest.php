@@ -46,11 +46,11 @@ class StorePatientRequest extends FormRequest
             'allergies' => ['nullable', 'string'],
             'family_history' => ['nullable', 'string'],
             'lab' => ['required_without_all:radiology,medical_history', 'array'],
-            'lab.*' => ['file', 'mimes:pdf', 'max:10240'],
+            'lab.*' => ['file', 'mimes:pdf,jpg', 'max:10240'],
             'radiology' => ['required_without_all:lab,medical_history', 'array'],
-            'radiology.*' => ['file', 'mimes:pdf', 'max:10240'],
+            'radiology.*' => ['file', 'mimes:pdf,jpg', 'max:10240'],
             'medical_history' => ['required_without_all:lab,radiology', 'array'],
-            'medical_history.*' => ['file', 'mimes:pdf', 'max:10240'],
+            'medical_history.*' => ['file', 'mimes:pdf,jpg', 'max:10240'],
             'current_complaint' => ['nullable', 'string'],
         ];
     }
