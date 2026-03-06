@@ -12,7 +12,7 @@ trait LogsActivity
             $modelName = class_basename($model);
             if ($modelName === 'KeyPoint' && $model->is_manual) {
                 $model->logActivity('created');
-            }elseif (in_array($modelName, ['Task', 'Medication'])) {
+            } elseif (in_array($modelName, ['Task', 'Medication'])) {
                 $model->logActivity('created');
             }
         });
@@ -90,7 +90,7 @@ trait LogsActivity
 
         $displayName = match (true) {
             $this instanceof \App\Models\Patient => $this->user?->name,
-            $this instanceof \App\Models\KeyPoint => ($this->is_manual ? "Doctor Note" : "Key Point") ,
+            $this instanceof \App\Models\KeyPoint => ($this->is_manual ? 'Doctor Note' : 'Key Point') ,
             $this instanceof \App\Models\Task => "Task: '{$this->title}'",
             $this instanceof \App\Models\Medication => "Medication: '{$this->name}'",
             default => "{$modelName} (ID: {$this->id})"
@@ -111,10 +111,10 @@ trait LogsActivity
             $messages = [];
 
             foreach ($changes as $field => $values) {
-                if(($this instanceof \App\Models\Patient && $field === 'status') || $this instanceof \App\Models\KeyPoint ) {
+                if (($this instanceof \App\Models\Patient && $field === 'status') || $this instanceof \App\Models\KeyPoint) {
                     $messages[] = "{$field} changed from '{$values['old']}' to '{$values['new']}'";
                 } else {
-                    if($field === 'next_visit_date'){
+                    if ($field === 'next_visit_date') {
                         $values['new'] = \Carbon\Carbon::parse($values['new'])->format('D, F j, Y');
                         $field = 'next visit date';
                     }

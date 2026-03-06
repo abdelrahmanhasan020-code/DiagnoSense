@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Patient extends Model
 {
-    use LogsActivity , SoftDeletes ;
+    use LogsActivity , SoftDeletes;
 
     protected $fillable = [
         'id',
@@ -78,6 +78,7 @@ class Patient extends Model
     {
         return $this->morphMany(ActivityLog::class, 'model');
     }
+
     public function refreshVisitDates($newDate)
     {
         if ($newDate && $this->next_visit_date != $newDate) {
