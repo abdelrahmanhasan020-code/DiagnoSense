@@ -56,7 +56,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/patients/{patientId}/key-info', [KeyPointController::class, 'store']);
     Route::get('/patients/{patientId}/decision-support', [PatientController::class, 'getDecisionSupport']);
     Route::delete('/patients/{patientId}', [PatientController::class, 'destroy']);
-    Route::post('/wallet/charge', [WalletController::class, 'charge']);
+    Route::post('/wallet/charge', [WalletController::class, 'store']);
+    Route::get('/transactions', [WalletController::class, 'index']);
 });
 
 Route::post('/stripe/webhook', [StripeWebhookController::class, 'handle']);

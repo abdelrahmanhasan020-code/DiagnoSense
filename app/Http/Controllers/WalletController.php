@@ -3,12 +3,27 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ChargeWalletRequest;
+use App\Http\Resources\TransactionResource;
+use App\Http\Responses\ApiResponse;
 use Stripe\Checkout\Session;
 use Stripe\Stripe;
 
 class WalletController extends Controller
 {
-    public function charge(ChargeWalletRequest $request)
+    public function index()
+    {
+        $currentDoctor = auth()->user()->doctor;
+        $transactions = $currentDoctor->transactions()->get();
+        $currentCredits = $currentDoctor->wallet->balance;
+        $data = [
+            'credits' => $currentCredits,
+            'transactions' => TransactionResource::collection($transactions),
+        ];
+
+        return ApiResponse::success(message: 'Wallet transactions retrieved successfully', data: $data, statusCode: 200);
+    }
+
+    public function store(ChargeWalletRequest $request)
     {
         Stripe::setApiKey(config('services.stripe.secret'));
 

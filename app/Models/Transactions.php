@@ -9,6 +9,7 @@ class Transactions extends Model
     protected $fillable = [
         'amount',
         'type',
+        'status',
         'source_id',
         'source_type',
         'description',

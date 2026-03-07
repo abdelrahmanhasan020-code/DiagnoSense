@@ -36,6 +36,7 @@ class StripeWebhookController
                 $wallet->increment('balance', $amount);
                 Transactions::query()->create([
                     'amount' => $amount,
+                    'status' => 'completed',
                     'type' => 'charge',
                     'source_type' => Wallet::class,
                     'source_id' => $wallet->id,
