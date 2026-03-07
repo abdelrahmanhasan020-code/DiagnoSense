@@ -61,7 +61,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
 Route::post('/stripe/webhook', [StripeWebhookController::class, 'handle']);
 
-Route::get('/payment-success?session_id={CHECKOUT_SESSION_ID}', function () {
+Route::get('/payment-success', function () {
     return response()->json(['message' => 'Payment successful! You can close this tab.']);
 })->name('payment.success');
 
