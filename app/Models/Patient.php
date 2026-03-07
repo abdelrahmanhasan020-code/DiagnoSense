@@ -25,8 +25,8 @@ class Patient extends Model
     ];
 
     protected $casts = [
-        'last_visit_date' => 'date',
-        'next_visit_date' => 'date',
+        'last_visit_date' => 'datetime',
+        'next_visit_date' => 'datetime',
     ];
 
     public function user()

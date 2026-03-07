@@ -25,7 +25,7 @@ class VisitItemController extends Controller
             'tasks' => TaskResource::collection($tasks),
             'medications' => MedicationResource::collection($medications),
             'next_visit_date' => $patient->next_visit_date ?
-            \Carbon\Carbon::parse($patient->next_visit_date)->format('D, F j, Y') : null,
+            \Carbon\Carbon::parse($patient->next_visit_date)->timezone('Africa/Cairo')->format('D, F j, Y - g:i A') : null,
         ];
 
         return ApiResponse::success(
