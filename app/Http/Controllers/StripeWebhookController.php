@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Transactions;
 use App\Models\Wallet;
 use Illuminate\Http\Request;
 use Stripe\Webhook;
@@ -27,13 +28,16 @@ class StripeWebhookController
 
             $wallet = Wallet::query()->firstOrCreate(['doctor_id' => $doctorId]);
             $wallet->increment('balance', $amount);
-            $wallet->save();
-
-            return response()->json([
-                'success' => true,
-                'message' => 'Payment successful',
-                'credits' => $wallet->balance,
+            Transactions::query()->create([
+                'amount' => $amount,
+                'type' => 'charge',
+                'source_type' => Wallet::class,
+                'source_id' => $wallet->id,
+                'description' => 'Wallet charge via Stripe',
+                'doctor_id' => $doctorId,
             ]);
+
+            return response()->json(['success' => true]);
         }
     }
 }
