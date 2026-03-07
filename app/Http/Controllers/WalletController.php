@@ -14,13 +14,8 @@ class WalletController extends Controller
     {
         $currentDoctor = auth()->user()->doctor;
         $transactions = $currentDoctor->transactions()->get();
-        $currentCredits = $currentDoctor->wallet->balance;
-        $data = [
-            'credits' => $currentCredits,
-            'transactions' => TransactionResource::collection($transactions),
-        ];
 
-        return ApiResponse::success(message: 'Wallet transactions retrieved successfully', data: $data, statusCode: 200);
+        return ApiResponse::success(message: 'Wallet transactions retrieved successfully', data: TransactionResource::collection($transactions), statusCode: 200);
     }
 
     public function store(ChargeWalletRequest $request)
