@@ -51,4 +51,14 @@ class Doctor extends Model
     {
         return $this->hasMany(Transactions::class);
     }
+
+    public function subscriptions()
+    {
+        return $this->hasMany(Subscriptions::class);
+    }
+
+    public function usages()
+    {
+        return $this->hasMany(Usage::class);
+    }
 }
