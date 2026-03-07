@@ -46,4 +46,9 @@ class Doctor extends Model
     {
         return $this->hasOne(Wallet::class);
     }
+
+    public function transactions()
+    {
+        return $this->hasMany(Transactions::class);
+    }
 }

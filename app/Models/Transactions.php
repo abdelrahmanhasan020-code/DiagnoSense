@@ -4,10 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Wallet extends Model
+class Transactions extends Model
 {
     protected $fillable = [
-        'balance',
+        'amount',
+        'type',
+        'source_id',
+        'source_type',
+        'description',
         'doctor_id',
     ];
 
@@ -16,8 +20,8 @@ class Wallet extends Model
         return $this->belongsTo(Doctor::class);
     }
 
-    public function transactions()
+    public function source()
     {
-        return $this->morphMany(Transactions::class, 'source');
+        return $this->morphTo();
     }
 }
