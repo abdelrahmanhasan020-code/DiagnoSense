@@ -15,6 +15,11 @@ class Subscriptions extends Model
         'used_summaries',
     ];
 
+    protected $casts = [
+        'started_at' => 'datetime',
+        'expires_at' => 'datetime',
+    ];
+
     public function doctor()
     {
         return $this->belongsTo(Doctor::class);

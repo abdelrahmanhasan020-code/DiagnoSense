@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\SubscribePlanRequest;
+use App\Http\Resources\CurrentSubscriptionResource;
 use App\Http\Resources\PlanResource;
 use App\Http\Responses\ApiResponse;
 use App\Models\Plan;
@@ -57,6 +58,22 @@ class SubscriptionController extends Controller
             "Available plans retrieved successfully",
             PlanResource::collection($plans),
             200
+        );
+    }
+
+    public function current(Request $request){
+        $doctor = $request->user()->doctor->load(['wallet', 'subscriptions.plan']);
+        if(!$doctor->billing_mode){
+            return ApiResponse::error(
+                "No active subscription or billing mode found.",
+                null,
+                404
+            );
+        }
+        return ApiResponse::success(
+        "Current billing mode retrieved successfully",
+        new CurrentSubscriptionResource($doctor),
+        200
         );
     }
 
