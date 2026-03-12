@@ -25,6 +25,14 @@ class SubscriptionController extends Controller
 
         try {
             $doctor = $request->user()->doctor;
+            $currentSubscription = $doctor->activeSubscription;
+            if($currentSubscription->status === 'active'){
+                return ApiResponse::error(
+                    "You already have an active subscription. Please cancel it before subscribing to a new plan.",
+                    null,
+                    400
+                );
+            }
             $subscription = $this->subscriptionService->subscribeDoctorToPlan($doctor, $validated['plan_id']);
 
             return ApiResponse::success(
@@ -82,7 +90,7 @@ class SubscriptionController extends Controller
     {
         $doctor = $request->user()->doctor;
         $mode = $doctor->billing_mode;
-        
+
         if ($mode === 'pay_per_use') {
             $doctor->update(['billing_mode' => null]);
             return ApiResponse::success("Pay-Per-Use mode has been disabled. Please subscribe to a plan to continue.", null, 200);

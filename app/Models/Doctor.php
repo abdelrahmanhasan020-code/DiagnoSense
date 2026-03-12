@@ -71,7 +71,8 @@ class Doctor extends Model
                     ->where('expires_at', '>', now())
                     ->whereHas('plan', function ($query) {
                         $query->whereColumn('subscriptions.used_summaries', '<', 'plans.summaries_limit');
-                    });
+                    })
+                    ->latest();
     }
 
     public function latestSubscription()
