@@ -15,7 +15,6 @@ use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\VisitController;
 use App\Http\Controllers\VisitItemController;
 use App\Http\Controllers\WalletController;
-use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('check-user-type')->group(function () {
@@ -68,11 +67,3 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 
 Route::post('/stripe/webhook', [StripeWebhookController::class, 'handle']);
-
-Route::get('/payment-success', function () {
-    return Redirect::to('http://localhost:5173/subscription?status=success');
-})->name('payment.success');
-
-Route::get('/payment-cancel', function () {
-    return Redirect::to('http://localhost:5173/subscription?status=cancel');
-})->name('payment.cancel');

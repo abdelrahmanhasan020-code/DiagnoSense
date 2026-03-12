@@ -82,8 +82,7 @@ class ProcessAi implements ShouldQueue
                     'status' => 'completed',
                 ]);
 
-
-                if($this->jobData['features']['decision_support']) {
+                if ($this->jobData['features']['decision_support']) {
                     $decisions = $data['decision_support'] ?? [];
                     unset($data['decision_support']);
                     foreach ($decisions as $decision) {
@@ -95,7 +94,6 @@ class ProcessAi implements ShouldQueue
                         ]);
                     }
                 }
-
 
                 unset($data['key_information']['ai_insight']);
                 unset($data['key_information']['ai_summary']);
@@ -112,8 +110,6 @@ class ProcessAi implements ShouldQueue
                     }
                 }
 
-
-
                 $doctor = Doctor::with(['activeSubscription', 'wallet'])->find($this->jobData['doctor_id']);
                 if ($doctor) {
                     if ($doctor->billing_mode === 'subscription' && $doctor->activeSubscription) {
@@ -124,7 +120,7 @@ class ProcessAi implements ShouldQueue
                             'amount' => Plan::PAY_PER_USE_PRICE,
                             'type' => 'usage',
                             'status' => 'completed',
-                            'description' => "Pay-per-use Analysis File",
+                            'description' => 'Pay-per-use Analysis File',
                             'source_type' => get_class($analysisRecord),
                             'source_id' => $analysisRecord->id,
                         ]);

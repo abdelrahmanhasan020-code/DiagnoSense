@@ -1,10 +1,10 @@
 <?php
+
 namespace App\Services;
 
-use App\Models\Plan;
 use App\Models\Doctor;
+use App\Models\Plan;
 use Illuminate\Support\Facades\DB;
-use Exception;
 
 class SubscriptionService
 {
@@ -15,8 +15,8 @@ class SubscriptionService
             $plan = Plan::findOrFail($planId);
 
             $wallet = $doctor->wallet;
-            if (!$wallet || $wallet->balance < $plan->price) {
-                return false ;
+            if (! $wallet || $wallet->balance < $plan->price) {
+                return false;
             }
 
             $wallet->decrement('balance', $plan->price);
@@ -51,5 +51,4 @@ class SubscriptionService
 
         $doctor->subscriptions()->update(['status' => 'cancelled']);
     }
-
 }
