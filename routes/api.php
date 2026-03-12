@@ -15,6 +15,7 @@ use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\VisitController;
 use App\Http\Controllers\VisitItemController;
 use App\Http\Controllers\WalletController;
+use Illuminate\Support\Facades\Broadcast;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Route;
 
@@ -76,3 +77,5 @@ Route::get('/payment-success', function () {
 Route::get('/payment-cancel', function () {
     return Redirect::to('http://localhost:5173/subscription?status=cancel');
 })->name('payment.cancel');
+
+Broadcast::routes(['middleware' => ['auth:sanctum']]);
