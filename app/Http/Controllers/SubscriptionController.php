@@ -22,31 +22,38 @@ class SubscriptionController extends Controller
     public function subscribe(SubscribePlanRequest $request)
     {
         $validated = $request->validated();
-
-        try {
-            $doctor = $request->user()->doctor;
-            $currentSubscription = $doctor->activeSubscription;
-            if($currentSubscription->status === 'active'){
-                return ApiResponse::error(
-                    "You already have an active subscription. Please cancel it before subscribing to a new plan.",
-                    null,
-                    400
-                );
-            }
-            $subscription = $this->subscriptionService->subscribeDoctorToPlan($doctor, $validated['plan_id']);
-
-            return ApiResponse::success(
-                "Successfully subscribed to the plan!",
-                null,
-                201
-            );
-        } catch (\Exception $e) {
+        $doctor = $request->user()->doctor;
+        if (!$doctor) {
+            return ApiResponse::error("Doctor profile not found.", null, 404);
+        }
+        $currentSubscription = $doctor->activeSubscription;
+        if($currentSubscription && $currentSubscription->status === 'active'){
             return ApiResponse::error(
-                $e->getMessage(),
+                "You already have an active subscription. Please cancel it before subscribing to a new plan.",
                 null,
                 400
             );
         }
+        $current_balance = $doctor->wallet ? $doctor->wallet->balance : 0;
+        $plan_cost = Plan::find($validated['plan_id'])->price;
+        if($current_balance < $plan_cost){
+            $needed = $plan_cost - $current_balance;
+            return ApiResponse::error(
+                "Insufficient balance. Please recharge $needed E£ to your wallet to subscribe to this plan.",
+                null,
+                400
+            );
+        }
+        $subscription = $this->subscriptionService->subscribeDoctorToPlan($doctor, $validated['plan_id']);
+        if (!$subscription) {
+            return ApiResponse::error("Failed to process the subscription. Please try again later.", null, 500);
+        }
+        return ApiResponse::success(
+            "Successfully subscribed to the plan!",
+            null,
+            201
+        );
+    
     }
 
     public function switchToPayPerUse(Request $request)

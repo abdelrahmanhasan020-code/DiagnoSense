@@ -16,8 +16,7 @@ class SubscriptionService
 
             $wallet = $doctor->wallet;
             if (!$wallet || $wallet->balance < $plan->price) {
-                $needed = $plan->price - ($wallet->balance ?? 0);
-                throw new Exception("Insufficient credits. You need E£ " . $needed . " more.");
+                return false ;
             }
 
             $wallet->decrement('balance', $plan->price);
