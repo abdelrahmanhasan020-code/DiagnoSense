@@ -49,8 +49,8 @@ class StripeWebhookController
                 return $wallet->fresh();
             });
             if($wallet){
-                $doctor = Doctor::find($doctorId);
-                $doctor->notify(new CreditAdded($amount, $wallet->balance));
+                $user = $wallet->doctor->user;
+                $user->notify(new CreditAdded($amount, $wallet->balance));
             }
 
             return response()->json(['success' => true]);
