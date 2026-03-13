@@ -110,7 +110,7 @@ class PatientController extends Controller
                 'file_paths' => $pathsForAI,
                 'features' => [
                     'decision_support' => $doctor->hasFeature('Decision Support'),
-                ]
+                ],
             ];
 
             DB::commit();

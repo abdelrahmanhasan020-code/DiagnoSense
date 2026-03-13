@@ -14,28 +14,28 @@ class PlanSeeder extends Seeder
     {
         $plans = [
             [
-                "name" => "Basic",
+                'name' => 'Basic',
                 'price' => 2400.00,
                 'summaries_limit' => 270,
                 'duration_days' => 30,
                 'features' => json_encode([
                     'Key Important Information',
-                    'Comparative Analysis'
-                ])
+                    'Comparative Analysis',
+                ]),
             ],
             [
-                "name" => "Pro",
+                'name' => 'Pro',
                 'price' => 6000.00,
                 'summaries_limit' => 450,
                 'duration_days' => 30,
                 'features' => json_encode([
                     'Key Important Information',
                     'Comparative Analysis',
-                    'Decision Support'
-                ])
+                    'Decision Support',
+                ]),
             ],
             [
-                "name" => "Premium",
+                'name' => 'Premium',
                 'price' => 12000.00,
                 'summaries_limit' => 660,
                 'duration_days' => 30,
@@ -43,8 +43,8 @@ class PlanSeeder extends Seeder
                     'Key Important Information',
                     'Comparative Analysis',
                     'Decision Support',
-                    'DiagnoBot'
-                ])
+                    'DiagnoBot',
+                ]),
             ],
         ];
         foreach ($plans as $plan) {
