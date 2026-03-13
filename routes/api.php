@@ -69,13 +69,4 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 
 Route::post('/stripe/webhook', [StripeWebhookController::class, 'handle']);
-
-Route::get('/payment-success', function () {
-    return Redirect::to('http://localhost:5173/subscription?status=success');
-})->name('payment.success');
-
-Route::get('/payment-cancel', function () {
-    return Redirect::to('http://localhost:5173/subscription?status=cancel');
-})->name('payment.cancel');
-
 Broadcast::routes(['middleware' => ['auth:sanctum']]);
