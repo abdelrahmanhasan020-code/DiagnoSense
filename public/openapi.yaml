@@ -1219,7 +1219,7 @@ paths:
       security: []
   /api/dashboard/summary:
     get:
-      summary: ''
+      summary: 'Retreive Dashboard Wedgets Info'
       operationId: getApiDashboardSummary
       description: ''
       parameters: []
@@ -1241,7 +1241,7 @@ paths:
       security: []
   /api/dashboard/status-distribution:
     get:
-      summary: ''
+      summary: 'Retreive Pie-Chart Status Distribution Data'
       operationId: getApiDashboardStatusDistribution
       description: ''
       parameters: []
@@ -1263,7 +1263,7 @@ paths:
       security: []
   /api/dashboard/top-diseases:
     get:
-      summary: ''
+      summary: 'Retreive Bar-Chart Top Diseases Data'
       operationId: getApiDashboardTopDiseases
       description: ''
       parameters: []
@@ -1285,7 +1285,7 @@ paths:
       security: []
   /api/dashboard/today-visits:
     get:
-      summary: ''
+      summary: 'Retreive Today Visits Data Card'
       operationId: getApiDashboardTodayVisits
       description: ''
       parameters: []
