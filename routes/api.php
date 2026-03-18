@@ -10,8 +10,11 @@ use App\Http\Controllers\Auth\SocialAuthController;
 use App\Http\Controllers\KeyPointController;
 use App\Http\Controllers\Patient\PatientController;
 use App\Http\Controllers\SearchController;
+use App\Http\Controllers\StripeWebhookController;
+use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\VisitController;
 use App\Http\Controllers\VisitItemController;
+use App\Http\Controllers\WalletController;
 use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 
@@ -38,7 +41,7 @@ Route::controller(SocialAuthController::class)->group(function () {
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/patients', [PatientController::class, 'index']);
-    Route::post('/patients', [PatientController::class, 'store']);
+    Route::post('/patients', [PatientController::class, 'store'])->middleware('check-ai-access');
     Route::get('/patients/{patientId}/key-info', [PatientController::class, 'getKeyInfo']);
     Route::post('/visits', [VisitController::class, 'store']);
     Route::post('/visits/{visit}/items', [VisitItemController::class, 'store']);
@@ -55,8 +58,16 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/patients/{patientId}/key-info', [KeyPointController::class, 'store']);
     Route::get('/patients/{patientId}/decision-support', [PatientController::class, 'getDecisionSupport']);
     Route::delete('/patients/{patientId}', [PatientController::class, 'destroy']);
+    Route::post('/wallet/charge', [WalletController::class, 'store']);
+    Route::get('/transactions', [WalletController::class, 'index']);
+    Route::post('/subscription/subscribe', [SubscriptionController::class, 'subscribe']);
+    Route::post('/subscription/pay-per-use', [SubscriptionController::class, 'switchToPayPerUse']);
+    Route::get('/subscription/plans', [SubscriptionController::class, 'index']);
+    Route::get('/subscription/current', [SubscriptionController::class, 'current']);
+    Route::post('/subscription/cancel', [SubscriptionController::class, 'cancel']);
 });
 
+Route::post('/stripe/webhook', [StripeWebhookController::class, 'handle']);
 
 
 Route::middleware('auth:sanctum')->group(function () {
