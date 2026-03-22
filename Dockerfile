@@ -17,6 +17,8 @@ RUN php artisan cache:clear || true
 
 EXPOSE 8080
 
+RUN docker-php-ext-install pdo pdo_mysql
+
 CMD php artisan config:clear && \
     php artisan migrate --force && \
     php artisan queue:work --tries=3 & \
