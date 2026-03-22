@@ -21,5 +21,5 @@ RUN docker-php-ext-install pdo pdo_mysql
 
 CMD php artisan config:clear && \
     php artisan migrate --force && \
-    php artisan queue:work --tries=3 & \
+    php artisan queue:work & \
     php artisan serve --host=0.0.0.0 --port=${PORT:-8080}
