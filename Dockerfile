@@ -6,7 +6,6 @@ COPY . .
 
 RUN apt-get update && apt-get install -y git unzip zip libzip-dev
 
-RUN docker-php-ext-install pdo pdo_mysql zip
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
@@ -14,6 +13,8 @@ RUN composer install --no-dev --optimize-autoloader
 
 RUN php artisan config:clear || true
 RUN php artisan cache:clear || true
+
+RUN docker-php-ext-install pdo pdo_mysql
 
 EXPOSE 8080
 
