@@ -12,7 +12,6 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 RUN composer install --no-dev --optimize-autoloader
 
-# clear cache
 RUN php artisan config:clear || true
 RUN php artisan cache:clear || true
 
