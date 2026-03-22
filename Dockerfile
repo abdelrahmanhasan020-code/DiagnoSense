@@ -4,7 +4,7 @@ WORKDIR /app
 
 COPY . .
 
-RUN apt-get update && apt-get install -y git unzip zip
+RUN apt-get update && apt-get install -y git unzip zip libzip-dev
 
 RUN docker-php-ext-install pdo pdo_mysql zip
 
