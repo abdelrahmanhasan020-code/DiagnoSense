@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Doctor;
 use App\Models\Transactions;
 use App\Models\Wallet;
 use App\Notifications\CreditAdded;
@@ -13,7 +14,8 @@ class StripeWebhookController
 {
     public function handle(Request $request)
     {
-        $endpointSecret = config('services.stripe.webhook_secret');
+        $endpointSecret = env('STRIPE_WEBHOOK_SECRET');
+
         $signature = $request->header('Stripe-Signature');
         $payload = $request->getContent();
 
@@ -24,17 +26,29 @@ class StripeWebhookController
         }
 
         if ($event->type == 'checkout.session.completed') {
+
             $session = $event->data->object;
+
             $doctorId = $session->metadata->doctor_id;
             $amount = $session->metadata->amount;
 
             $wallet = DB::transaction(function () use ($doctorId, $amount, $session) {
-                $transactionExists = Transactions::query()->where('payment_id', $session->id)->exists();
+
+                $transactionExists = Transactions::query()
+                    ->where('payment_id', $session->id)
+                    ->exists();
+
+                // ✅ مهم: منرجعش response هنا
                 if ($transactionExists) {
-                    return response()->json(['message' => 'Already processed']);
+                    return null;
                 }
-                $wallet = Wallet::query()->firstOrCreate(['doctor_id' => $doctorId]);
+
+                $wallet = Wallet::query()->firstOrCreate([
+                    'doctor_id' => $doctorId
+                ]);
+
                 $wallet->increment('balance', $amount);
+
                 Transactions::query()->create([
                     'amount' => $amount,
                     'status' => 'completed',
@@ -48,6 +62,7 @@ class StripeWebhookController
 
                 return $wallet->fresh();
             });
+
             if ($wallet) {
                 $user = $wallet->doctor->user;
                 $user->notify(new CreditAdded($amount, $wallet->balance));
@@ -55,5 +70,7 @@ class StripeWebhookController
 
             return response()->json(['success' => true]);
         }
+
+        return response()->json(['status' => 'ignored']);
     }
 }
