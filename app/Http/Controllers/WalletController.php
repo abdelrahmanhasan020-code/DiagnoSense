@@ -45,8 +45,8 @@ class WalletController extends Controller
                 'doctor_id' => auth()->user()->doctor->id,
                 'amount' => $request->balance,
             ],
-            'success_url' => 'http://localhost:5173/subscription?status=success',
-            'cancel_url' => 'http://localhost:5173/subscription?status=cancel',
+           'success_url' => 'https://smart-learn-production-2b23.up.railway.app/success',
+            'cancel_url' => 'https://smart-learn-production-2b23.up.railway.app/cancel',
         ]);
 
         return response()->json([
